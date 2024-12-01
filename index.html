@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Pixelify+Sans:wght@400..700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Sheepish Game</title>
+    <link
+      rel="stylesheet"
+      href="./style.css"
+    />
+  </head>
+  <body>
+    <img
+      id="sheep"
+      height="85"
+      width="75"
+      src="./images/sheep.png"
+    />
+    <div class="canvas">
+      <canvas
+        id="scoreCanvas"
+        width="515"
+        height="700"
+      ></canvas>
+      <canvas
+        id="gameCanvas"
+        width="500"
+        height="500"
+      ></canvas>
+    </div>
+
+    <div class="wrapper">
+      <div class="starting">
+        <h2 id="title">Sheepish</h2>
+        <button id="start">Start</button>
+      </div>
+
+      <div class="help">
+        <ul>
+          <li>W A S D keys for movement</li>
+          <li>Reach the grass, crossing the road and river</li>
+          <li>Avoid colliding with cars and drowning</li>
+          <li>Reach the grass before 2️⃣5️⃣ seconds</li>
+          <li>You have 3 lives, you think you have what it takes?</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="gameOver">
+      <h2>
+        Game <br />Over<br />
+        <button id="again">Play Again ?</button>
+      </h2>
+    </div>
+
+    <script
+      type="module"
+      src="./main.js"
+    ></script>
+    <script>
+      const wrapper = document.querySelector(".wrapper");
+      const start = document.getElementById("start");
+      const canvas = document.querySelector(".canvas");
+      const help = document.querySelector(".help");
+      const gameOver = document.querySelector(".gameOver");
+      const again = document.getElementById("again");
+
+      canvas.style.display = "none";
+      gameOver.style.display = "none";
+
+      start.addEventListener("click", () => {
+        wrapper.style.display = "none";
+        canvas.style.display = "block";
+        help.style.display = "none";
+      });
+
+      again.addEventListener("click", () => {
+        wrapper.style.display = "none";
+        gameOver.style.display = "none";
+        canvas.style.display = "block";
+        help.style.display = "none";
+      });
+    </script>
+  </body>
+</html>

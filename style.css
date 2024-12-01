@@ -1,0 +1,115 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  background-image: url("./images/back.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+  font-family: "Pixelify Sans";
+}
+
+#scoreCanvas {
+  height: 640px;
+  width: 515px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: black;
+  border: 5px solid gold;
+  border-radius: 15px;
+}
+
+#gameCanvas {
+  border: 5px solid #d3d3d3;
+  width: 500px;
+  height: 500px;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -58%);
+}
+
+.wrapper {
+  border: 5px solid black;
+  width: 515px;
+  height: 600px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 15px;
+  background-image: url("./images/background1.jpg");
+  background-size: cover;
+}
+
+#sheep {
+  display: none;
+}
+
+.starting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+h2 {
+  text-align: center;
+  color: gold;
+  font-size: 70px;
+}
+
+#start {
+  font-size: 30px;
+  cursor: pointer;
+  width: fit-content;
+  border-radius: 10px;
+  background-image: linear-gradient(to left, #d3d3d3, green, gold);
+  color: #d3d3d3;
+  font-family: "Pixelify Sans";
+}
+
+.help {
+  font-size: 15px;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 0 10px 10px;
+  background-image: linear-gradient(to left, #d3d3d3, #ffcc00, #ff9900);
+  color: black;
+  font-family: "Pixelify Sans";
+}
+
+.gameOver {
+  border: 5px solid black;
+  width: 515px;
+  height: 600px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  background-image: url("./images/over.jpg");
+  background-size: cover;
+}
+
+#again {
+  font-size: 30px;
+  cursor: pointer;
+  width: fit-content;
+  border-radius: 10px;
+  background-image: linear-gradient(to left, #d3d3d3, green, gold);
+  color: white;
+  font-family: "Pixelify Sans";
+}
