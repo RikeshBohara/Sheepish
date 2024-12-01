@@ -93,8 +93,6 @@ export class CollisionHandler {
     this.game.createVehicles();
     this.game.createRafts();
 
-    this.updateScoreDisplay();
-
     const gameOver = document.querySelector(".gameOver");
     const canvas = document.querySelector(".canvas");
     const again = document.getElementById("again");
@@ -103,6 +101,7 @@ export class CollisionHandler {
     canvas.style.display = "none";
     again.addEventListener("click", () => {
       this.startTimer();
+      this.updateScoreDisplay();
     });
   }
 

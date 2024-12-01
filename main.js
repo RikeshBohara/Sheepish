@@ -43,6 +43,7 @@ window.addEventListener("load", function () {
       const start = document.getElementById("start");
       start.addEventListener("click", () => {
         this.collisionHandler.startTimer();
+        this.collisionHandler.updateScoreDisplay();
       });
     }
 
