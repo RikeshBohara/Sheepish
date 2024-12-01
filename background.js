@@ -77,16 +77,16 @@ export class Background {
         x * this.cellWidth,
         grassLane * this.cellHeight,
         this.width,
-        this.cellHeight
+        this.cellHeight + 1
       );
     }
 
     context.strokeStyle = "black";
     context.lineWidth = 2;
-    context.strokeRect(2, 555, this.width - 4, this.cellHeight - 2);
-    context.strokeRect(2, 325, this.width - 4, 555);
-    context.strokeRect(2, 280, this.width - 4, this.cellHeight - 2);
-    context.strokeRect(2, 45, this.width - 4, 234);
+    context.strokeRect(2, 465, this.width - 4, this.cellHeight - 1);
+    context.strokeRect(2, 268, this.width - 4, 465);
+    context.strokeRect(2, 230, this.width - 4, this.cellHeight - 1);
+    context.strokeRect(2, 39, this.width - 4, 192);
     context.strokeRect(2, 2, this.width - 4, this.cellHeight - 2);
   }
 }
