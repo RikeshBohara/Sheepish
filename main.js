@@ -40,18 +40,22 @@ window.addEventListener("load", function () {
       this.createRafts();
 
       this.collisionHandler = new CollisionHandler(this);
+      const start = document.getElementById("start");
+      start.addEventListener("click", () => {
+        this.collisionHandler.startTimer();
+      });
     }
 
     setupCanvas() {
-      this.scoreCtx.font = "30px Times New Roman";
+      this.scoreCtx.font = "40px Times New Roman";
       this.scoreCtx.fillStyle = "#d3d3d3";
       this.scoreCtx.textAlign = "center";
-      this.scoreCtx.fillText("SHEEPISH!", this.SCORE_CANVAS_WIDTH / 2, 50);
-      this.scoreCtx.font = "14px Arial";
+      this.scoreCtx.fillText("SHEEPISH!", this.SCORE_CANVAS_WIDTH / 2, 80);
+      this.scoreCtx.font = "18px Arial";
       this.scoreCtx.fillStyle = "gold";
       this.scoreCtx.textAlign = "start";
-      this.scoreCtx.fillText("SCORE: ", 20, 80);
-      this.scoreCtx.fillText(`TIME: ${this.time}`, 420, 80);
+      this.scoreCtx.fillText("SCORE: ", 20, 110);
+      this.scoreCtx.fillText(`TIME: ${this.time}`, 420, 110);
       this.scoreCtx.fillText("Lives: ", 20, this.SCORE_CANVAS_HEIGHT - 20);
     }
 

@@ -94,32 +94,35 @@ export class CollisionHandler {
     this.game.createRafts();
 
     this.updateScoreDisplay();
-    this.startTimer();
 
     const gameOver = document.querySelector(".gameOver");
     const canvas = document.querySelector(".canvas");
+    const again = document.getElementById("again");
 
     gameOver.style.display = "block";
     canvas.style.display = "none";
+    again.addEventListener("click", () => {
+      this.startTimer();
+    });
   }
 
   updateScoreDisplay() {
     this.lives = 3;
     if (this.game.scoreCtx) {
-      this.game.scoreCtx.clearRect(80, 70, 100, 30);
+      this.game.scoreCtx.clearRect(90, 95, 100, 30);
       this.game.scoreCtx.clearRect(
-        65,
+        70,
         this.game.SCORE_CANVAS_HEIGHT - 40,
         100,
         30
       );
 
       this.game.scoreCtx.fillStyle = "gold";
-      this.game.scoreCtx.fillText(`${this.game.score}`, 80, 80);
+      this.game.scoreCtx.fillText(`${this.game.score}`, 95, 110);
 
       this.game.scoreCtx.fillText(
         `${this.game.lives}`,
-        65,
+        70,
         this.game.SCORE_CANVAS_HEIGHT - 20
       );
     }
@@ -142,9 +145,9 @@ export class CollisionHandler {
 
   updateTimerDisplay() {
     if (this.game.scoreCtx) {
-      this.game.scoreCtx.clearRect(420, 70, 100, 30);
+      this.game.scoreCtx.clearRect(420, 90, 100, 30);
       this.game.scoreCtx.fillStyle = "gold";
-      this.game.scoreCtx.fillText(`TIME: ${this.timer}`, 420, 80);
+      this.game.scoreCtx.fillText(`TIME: ${this.timer}`, 420, 110);
     }
   }
 
