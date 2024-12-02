@@ -1,4 +1,3 @@
-// Game.js
 import { Player } from "./player.js";
 import { Background } from "./background.js";
 import { Car, Log } from "./obstacle.js";
@@ -10,6 +9,7 @@ window.addEventListener("load", function () {
 
   const scoreCanvas = document.getElementById("scoreCanvas");
   const scoreCtx = scoreCanvas.getContext("2d");
+
   class Game {
     constructor(gameCanvas, scoreCanvas, ctx, scoreCtx) {
       this.GAME_CANVAS_WIDTH = gameCanvas.width;
@@ -25,8 +25,23 @@ window.addEventListener("load", function () {
       this.cellWidth = this.GAME_CANVAS_WIDTH / this.cols;
       this.cellHeight = this.GAME_CANVAS_HEIGHT / this.rows;
 
+      this.background = null;
+      this.player = null;
+      this.score = 0;
+      this.lives = 3;
+      this.time = 25;
+      this.cars = [];
+      this.logs = [];
+      this.collisionHandler = null;
+
+      const startButton = document.getElementById("start");
+      startButton.addEventListener("click", () => this.start());
+    }
+
+    start() {
       this.background = new Background(this);
       this.player = new Player(this, this.cellWidth);
+      this.collisionHandler = new CollisionHandler(this);
 
       this.score = 0;
       this.lives = 3;
@@ -35,16 +50,17 @@ window.addEventListener("load", function () {
       this.cars = [];
       this.logs = [];
 
-      this.setupCanvas();
       this.createVehicles();
       this.createRafts();
 
-      this.collisionHandler = new CollisionHandler(this);
-      const start = document.getElementById("start");
-      start.addEventListener("click", () => {
-        this.collisionHandler.startTimer();
-        this.collisionHandler.updateScoreDisplay();
-      });
+      this.setupCanvas();
+
+      this.collisionHandler.startTimer();
+      this.collisionHandler.updateScoreDisplay();
+
+      this.setupKeydownListener();
+
+      this.animate();
     }
 
     setupCanvas() {
@@ -138,6 +154,7 @@ window.addEventListener("load", function () {
         }
       });
     }
+
     createRafts() {
       const raftConfigs = [
         {
@@ -227,28 +244,24 @@ window.addEventListener("load", function () {
       this.collisionHandler.handleObstacles();
     }
 
+    setupKeydownListener() {
+      window.addEventListener("keydown", (event) => this.handleKeydown(event));
+    }
+
     handleKeydown(event) {
       if (event.key === "a" || event.key === "A") this.player.move("left");
       if (event.key === "d" || event.key === "D") this.player.move("right");
       if (event.key === "w" || event.key === "W") this.player.move("up");
       if (event.key === "s" || event.key === "S") this.player.move("down");
     }
+
+    animate() {
+      this.ctx.clearRect(0, 0, this.GAME_CANVAS_WIDTH, this.GAME_CANVAS_HEIGHT);
+      this.update();
+      this.draw(this.ctx);
+      requestAnimationFrame(() => this.animate());
+    }
   }
 
   const game = new Game(gameCanvas, scoreCanvas, ctx, scoreCtx);
-
-  function setupKeydownListener(game) {
-    window.addEventListener("keydown", (event) => game.handleKeydown(event));
-  }
-
-  setupKeydownListener(game);
-
-  function animate() {
-    ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-    game.update();
-    game.draw(ctx);
-    requestAnimationFrame(animate);
-  }
-
-  animate();
 });

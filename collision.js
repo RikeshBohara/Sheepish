@@ -1,6 +1,7 @@
 export class CollisionHandler {
   constructor(game) {
     this.game = game;
+    this.gameOver = false;
     this.startTimer();
     this.updateScoreDisplay();
   }
@@ -19,6 +20,8 @@ export class CollisionHandler {
   }
 
   handleObstacles() {
+    if (this.gameOver) return;
+
     const player = this.game.player;
     const playerPos = player.getPosition();
 
@@ -54,6 +57,9 @@ export class CollisionHandler {
   }
 
   resetPlayer() {
+    if (this.gameOver) return;
+
+    const crash = new Audio("./audio/fail.mp3");
     this.game.player.col = 5;
     this.game.player.row = 12;
 
@@ -61,7 +67,7 @@ export class CollisionHandler {
     if (this.game.score > 0) {
       this.game.score -= 50;
     }
-
+    crash.play();
     this.updateScoreDisplay();
     this.startTimer();
 
@@ -71,21 +77,28 @@ export class CollisionHandler {
   }
 
   handleSuccess() {
+    const success = new Audio("./audio/success.mp3");
+    if (this.gameOver) return;
+
     this.game.score += 100;
 
     this.game.player.col = 5;
     this.game.player.row = 12;
-
+    success.play();
     this.updateScoreDisplay();
     this.startTimer();
   }
 
   resetGame() {
+    if (this.gameOver) return;
+
+    this.gameOver = true;
+    clearInterval(this.timerInterval);
+
     this.game.player.col = 5;
     this.game.player.row = 12;
 
     this.game.score = 0;
-
     this.game.lives = 3;
 
     this.game.cars = [];
@@ -96,17 +109,22 @@ export class CollisionHandler {
     const gameOver = document.querySelector(".gameOver");
     const canvas = document.querySelector(".canvas");
     const again = document.getElementById("again");
+    const gameOverAudio = new Audio("./audio/gameOver.mp3");
+    gameOverAudio.play();
 
     gameOver.style.display = "block";
     canvas.style.display = "none";
+
     again.addEventListener("click", () => {
       this.startTimer();
       this.updateScoreDisplay();
+      this.gameOver = false;
+      gameOver.style.display = "none";
+      canvas.style.display = "block";
     });
   }
 
   updateScoreDisplay() {
-    this.lives = 3;
     if (this.game.scoreCtx) {
       this.game.scoreCtx.clearRect(90, 95, 100, 30);
       this.game.scoreCtx.clearRect(
@@ -131,9 +149,14 @@ export class CollisionHandler {
     if (this.timerInterval) clearInterval(this.timerInterval);
 
     this.timer = 25;
-    this.timerInterval = setInterval(() => {
-      this.timer--;
 
+    this.timerInterval = setInterval(() => {
+      if (this.gameOver) {
+        clearInterval(this.timerInterval);
+        return;
+      }
+
+      this.timer--;
       this.updateTimerDisplay();
 
       if (this.timer === 0) {
