@@ -2,6 +2,9 @@ export class CollisionHandler {
   constructor(game) {
     this.game = game;
     this.gameOver = false;
+    this.backgroundAudio = new Audio("./audio/background.mp3");
+    this.backgroundAudio.loop = true;
+    this.backgroundAudio.volume = 0.2;
     this.startTimer();
     this.updateScoreDisplay();
   }
@@ -95,6 +98,9 @@ export class CollisionHandler {
     this.gameOver = true;
     clearInterval(this.timerInterval);
 
+    this.backgroundAudio.pause();
+    this.backgroundAudio.currentTime = 0;
+
     this.game.player.col = 5;
     this.game.player.row = 12;
 
@@ -116,6 +122,7 @@ export class CollisionHandler {
     canvas.style.display = "none";
 
     again.addEventListener("click", () => {
+      this.backgroundAudio.play();
       this.startTimer();
       this.updateScoreDisplay();
       this.gameOver = false;
@@ -178,5 +185,9 @@ export class CollisionHandler {
       this.game.scoreCtx.fillStyle = "gold";
       this.game.scoreCtx.fillText(`TIME: ${this.game.time}`, 420, 110);
     }
+  }
+
+  startBackgroundAudio() {
+    this.backgroundAudio.play();
   }
 }

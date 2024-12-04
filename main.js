@@ -43,6 +43,8 @@ window.addEventListener("load", function () {
       this.player = new Player(this, this.cellWidth);
       this.collisionHandler = new CollisionHandler(this);
 
+      this.collisionHandler.startBackgroundAudio();
+
       this.score = 0;
       this.lives = 3;
       this.time = 25;
