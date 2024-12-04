@@ -5,8 +5,63 @@ export class CollisionHandler {
     this.backgroundAudio = new Audio("./audio/background.mp3");
     this.backgroundAudio.loop = true;
     this.backgroundAudio.volume = 0.2;
+
+    this.isMuted = false;
+
     this.startTimer();
     this.updateScoreDisplay();
+  }
+
+  toggleMute() {
+    this.isMuted = !this.isMuted;
+    this.backgroundAudio.muted = this.isMuted;
+
+    this.updateMuteDisplay();
+  }
+
+  updateMuteDisplay() {
+    if (this.game.scoreCtx) {
+      this.game.scoreCtx.clearRect(
+        420,
+        this.game.SCORE_CANVAS_HEIGHT - 50,
+        80,
+        40
+      );
+
+      this.game.scoreCtx.font = "18px Arial";
+      this.game.scoreCtx.fillStyle = "gold";
+
+      const muteText = this.isMuted ? "Unmute" : "Mute";
+      this.game.scoreCtx.fillText(
+        muteText,
+        420,
+        this.game.SCORE_CANVAS_HEIGHT - 20
+      );
+    }
+  }
+
+  setupScoreCanvasListeners() {
+    const scoreCanvas = document.getElementById("scoreCanvas");
+    scoreCanvas.addEventListener("click", (event) => {
+      const rect = scoreCanvas.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+
+      if (
+        x >= 420 &&
+        x <= 500 &&
+        y >= this.game.SCORE_CANVAS_HEIGHT - 50 &&
+        y <= this.game.SCORE_CANVAS_HEIGHT - 10
+      ) {
+        this.toggleMute();
+      }
+    });
+  }
+
+  startBackgroundAudio() {
+    this.backgroundAudio.play();
+    this.updateMuteDisplay();
+    this.setupScoreCanvasListeners();
   }
 
   collision(player, obstacle) {
@@ -185,9 +240,5 @@ export class CollisionHandler {
       this.game.scoreCtx.fillStyle = "gold";
       this.game.scoreCtx.fillText(`TIME: ${this.game.time}`, 420, 110);
     }
-  }
-
-  startBackgroundAudio() {
-    this.backgroundAudio.play();
   }
 }
